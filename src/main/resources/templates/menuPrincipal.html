@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hidrolife - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+
+<body>
+
+
+    <!-- Títulos -->
+    <div class="container text-center mt-5">
+        <h1 class="mb-2 hydro-title">Bienvenido a Hidrolife</h1>
+
+        <h2 class="fw-normal">Seleccione la funcion que desea ejecutar</h2>
+    </div>
+
+    <div class="container mt-5">
+    <div class="row justify-content-center g-5 mt-1">
+
+        <!-- BOTÓN 1 -->
+        <div class="col-12 col-md-4 col-lg-3">
+            <a th:href="@{/baseDatos}" class="big-icon-btn">
+                <i class="bi bi-database"></i>
+                <span>Registro de cultivos</span>
+            </a>
+        </div>
+
+        <!-- BOTÓN 2 -->
+        <div class="col-12 col-md-4 col-lg-3">
+            <a th:href="@{/sensores}" class="big-icon-btn">
+                <i class="bi bi-speedometer2"></i>
+                <span>Sensores</span>
+            </a>
+        </div>
+
+        <!-- BOTÓN 3 -->
+        <div class="col-12 col-md-4 col-lg-3">
+            <a th:href="@{/editarUsuario}" class="big-icon-btn">
+                <i class="bi bi-person-lines-fill"></i>
+                <span>Configuracion de usuario</span>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+
+</body>
+
+</html>

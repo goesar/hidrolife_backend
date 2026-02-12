@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Hidrolife - Login</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+        <link rel="stylesheet" th:href="@{/styles.css}">
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    </head>
+
+    <body>
+
+        <div class="container mt-4">
+            <a th:href="@{/menuPrincipal}" class="btn btn-hydro px-3 py-1">
+                <i class="bi bi-arrow-left-circle me-2"></i>
+                <span>Volver al menú</span>
+
+            </a>
+        </div>
+        <!-- Títulos -->
+        <div class="container text-center mt-5">
+            <h1 class="mb-2 hydro-title">Sistema de control de actividades</h1>
+
+            <h2 class="fw-normal">Consulte o cree actividades</h2>
+        </div>
+
+        <div class="container mt-5">
+
+
+            <div class="card p-4">
+
+                <form class="row g-3" th:action="@{/buscar}" method="get">
+
+                    <!-- Seleccionar criterio -->
+                    <div class="col-md-3">
+                        <label class="form-label">Tabla</label>
+                        <select id="tablaSelect" name="tabla" class="form-select" onchange="actualizarCriterios()">
+                            <option value="Actividades" th:selected="${tablaActual} == 'Actividades'">Actividades</option>
+                            <option value="Cultivos" th:selected="${tablaActual} == 'Cultivos'">Cultivos</option>
+                            <option value="Usuarios" th:selected="${tablaActual} == 'Usuarios'">Usuarios</option>
+                            <option value="Lecturas" th:selected="${tablaActual} == 'Lecturas'">Lecturas</option>
+                        </select>
+
+
+
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Buscar por</label>
+                        <select id="criterioSelect" name="criterio" class="form-select">
+                            <!-- Se llenará dinámicamente -->
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Valor</label>
+                        <input type="text" class="form-control" name="valor" placeholder="Escriba aquí su búsqueda">
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-auto">
+                            <label class="form-label">Fecha inicio</label>
+                            <input type="date" class="form-control input-fecha" name="fechaInicio">
+                        </div>
+
+                        <div class="col-auto">
+                            <label class="form-label">Fecha fin</label>
+                            <input type="date" class="form-control input-fecha" name="fechaFin">
+                        </div>
+                        <div class="col-auto mt-4">
+                            <button class="btn btn-hydro"  type="submit" >Buscar</button>
+                            <a class="btn btn-hydro"
+                               th:href="@{/reporte/pdf(
+                               tabla=${tablaActual},
+                               criterio=${criterioActual},
+                               valor=${valorActual},
+                               fechaInicio=${fechaInicioActual},
+                               fechaFin=${fechaFinActual}
+                               )}">
+                                Descargar PDF
+                            </a>
+
+                        </div>
+                    </div>
+                    <!-- Input único -->
+
+
+
+
+                </form>
+                <div class="row mt-3">
+                    <div class="col-auto d-grid">
+                        <button type="button" class="btn btn-hydro"
+                                data-bs-toggle="modal" data-bs-target="#modalRegistro">
+                            Crear nueva actividad
+                        </button>
+                    </div>
+
+                    <div class="col-auto d-grid">
+                        <button type="button" class="btn btn-hydro"
+                                data-bs-toggle="modal" data-bs-target="#modalCultivo">
+                            Crear nuevo cultivo
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============================
+          📌 TABLA: ACTIVIDADES
+          ============================ -->
+            <div th:if="${tablaActual} == 'Actividades'" class="mt-4">
+                <table class="table table-dark table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Actividad</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Cultivo</th>
+                            <th>Descripcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${resultados}">
+                            <td th:text="${item.idActividad}"></td>
+                            <td th:text="${item.actividades}"></td>
+                            <td th:text="${item.usuario}"></td>
+                            <td th:text="${#temporals.format(item.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+
+                            <td th:text="${item.cultivo.nombre}"></td>
+
+                            <td th:text="${item.descripcion}"></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- ============================
+                 📌 TABLA: CULTIVOS
+                 ============================ -->
+            <div th:if="${tablaActual} == 'Cultivos'" class="mt-4">
+                <table class="table table-dark table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Número de plantas</th>
+                            <th>pH ideal</th>
+                            <th>TDS ideal</th>
+                            <th>Fecha de inicio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${resultados}">
+                            <td th:text="${c.idCultivo}"></td>
+                            <td th:text="${c.nombre}"></td>
+                            <td th:text="${c.numeroPlantas}"></td>
+                            <td th:text="${c.phIdeal}"></td>
+                            <td th:text="${c.tdsIdeal}"></td>
+                            <td th:text="${c.fecha}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- ============================
+                 📌 TABLA: USUARIOS
+                 ============================ -->
+            <div th:if="${tablaActual} == 'Usuarios'" class="mt-4">
+                <table class="table table-dark table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="u : ${resultados}">
+                            <td th:text="${u.id}"></td>
+                            <td th:text="${u.nombre}"></td>
+                            <td th:text="${u.telefono}"></td>
+                            <td th:text="${u.email}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${tablaActual} == 'Lecturas'" class="mt-4">
+                <table class="table table-dark table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha y Hora</th>
+                            <th>ph</th>
+                            <th>TDS</th>
+                            <th>Humedad/th>
+                            <th>Temperatura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${resultados}">
+                            <td th:text="${c.idLectura}"></td>
+                            <td th:text="${c.fechaYHora}"></td>
+                            <td th:text="${c.ph}"></td>
+                            <td th:text="${c.tds}"></td>
+                            <td th:text="${c.humedad}"></td>
+                            <td th:text="${c.temperatura}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+        <div class="modal fade" id="modalRegistro" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+
+                    <!-- CABECERA -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nuevo Registro</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- CUERPO DEL MODAL (EL FORMULARIO) -->
+                    <div class="modal-body">
+
+                        <form th:action="@{/guardarActividad}" th:object="${actividad}" method="post">
+
+                            <div class="mb-3">
+                                <label class="form-label">Actividad</label>
+                                <input type="text" th:field="*{actividades}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Fecha</label>
+                                <input type="date" th:field="*{fecha}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Persona</label>
+                                <input type="text" th:field="*{usuario}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Descripcion</label>
+                                <input type="text" th:field="*{descripcion}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Cultivo</label>
+
+                                <select th:field="*{cultivo}" class="form-select" required>
+                                    <option value="">Seleccione un cultivo...</option>
+
+                                    <!-- OPCIONES CARGADAS DINÁMICAMENTE -->
+                                    <option th:each="c : ${cultivos}"
+                                            th:value="${c.idCultivo}"
+                                            th:text="${c.nombre}"></option>
+                                </select>
+                            </div>
+                            <button class="btn btn-hydro" type="submit">Guardar registro</button>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCultivo" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+
+                    <!-- CABECERA -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nuevo Cultivo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- CUERPO DEL MODAL (EL FORMULARIO) -->
+                    <div class="modal-body">
+
+                        <form th:action="@{/guardarCultivo}" th:object="${cultivo}" method="post">
+
+                            <div class="mb-3">
+                                <label class="form-label">Nombre del cultivo</label>
+                                <input type="text" th:field="*{nombre}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Numero de plantas</label>
+                                <input type="text" th:field="*{numeroPlantas}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">pH ideal</label>
+                                <input type="text" th:field="*{phIdeal}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">TDS ideal</label>
+                                <input type="text" th:field="*{tdsIdeal}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de inicio</label>
+                                <input type="date" th:field="*{fecha}" class="form-control" required>
+                            </div>
+
+
+
+                            <button class="btn btn-hydro" type="submit">Registrar cultivo</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="w-40">
+                <div th:if="${msg}" 
+                     class="alert alert-success alert-dismissible fade show text-center mt-3" 
+                     role="alert">
+                    <span th:text="${msg}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div th:if="${error}" 
+                     class="alert alert-danger alert-dismissible fade show text-center mt-3" 
+                     role="alert">
+                    <span th:text="${error}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="hidrolife.js"></script>
+
+    </body>
+
+</html>

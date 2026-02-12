@@ -1,0 +1,152 @@
+:root {
+    --hydro-green: #3BDE26;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.card {
+    background-color: #f2f2f2;
+    border: 1px solid #3BDE26;
+    border-radius: 10px;
+    color: #111;
+}
+
+.hydro-title {
+    color: var(--hydro-green);
+}
+
+.btn-hydro {
+    background-color: var(--hydro-green);
+    border-color: var(--hydro-green);
+    color: black;
+    font-weight: bold;
+    margin-top: 7px
+}
+
+
+
+.btn-hydro:hover {
+    background-color: #1e6f15;
+    border-color: #32c922;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-hydro-outline {
+    border: 2px solid var(--hydro-green);
+    color: var(--hydro-green);
+    background-color: transparent;
+}
+
+
+.btn-hydro-outline:hover {
+    background-color: var(--hydro-green);
+    color: black;
+    border-color: var(--hydro-green);
+}
+
+.form-box {
+    max-width: 600px;
+}
+
+.big-icon-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #222;
+    border: 2px solid #3BDE26;
+    border-radius: 20px;
+
+    padding: 60px 30px;
+    width: 100%;
+    text-decoration: none;
+
+    color: #3BDE26;
+    transition: 0.2s ease-in-out;
+
+    height: 330px;
+}
+
+.big-icon-btn i {
+    font-size: 110px;  
+    margin-bottom: 10px;
+}
+
+.big-icon-btn span {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;   
+    width: 100%;          
+    display: block; 
+}
+
+.big-icon-btn:hover {
+    background-color: #3BDE26;
+    color: black;
+    transform: translateY(-5px);
+}
+
+.big-icon-card {
+    background-color: #1a1a1a;
+    /*border: 2px solid #3BDE26;*/
+    border-radius: 20px;
+}
+
+.big-icon {
+    font-size: 12rem;
+    color: #3BDE26;
+}
+
+.big-icon-agua {
+    font-size: 10rem;
+    color: #3BDE26;
+}
+
+.sensor-title {
+    font-size: 4.5rem;   
+    margin-top: 30px;    
+}
+
+
+/* Quitar flechas en Chrome, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Quitar flechas en Firefox */
+input[type=number] {
+    
+    -moz-appearance: textfield;
+}
+
+.contenedorTolerancias {
+    margin-top: 90px;   
+}
+
+.contenedorToleranciasAgua {
+    margin-top: 160px;   
+}
+
+.card-login {
+    background-color: #e2e2e2; 
+    
+}
+
+.form-floating label {
+    color: #000 !important;      
+}
+
+.input-fecha {
+    max-width: 200px
+}
+
+.form-label { 
+    font-weight: bold;
+}
