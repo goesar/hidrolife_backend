@@ -21,36 +21,35 @@
 
     <div class="container d-flex justify-content-center mt-5">
         <div class="form-box w-100">
-            <form class="row g-3">
+            <form class="row g-3" th:action="@{/usuario/actualizar}" th:object="${usuario}" method="post">
                 <div class="col-md-12">
                     <label for="inputNombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="inputNombre">
+                    <input type="text" th:field="*{nombre}" class="form-control" id="inputNombre">
                 </div>
                 <div class="col-md-6">
                     <label for="inputContrasenia" class="form-label">Constraseña</label>
-                    <input type="password" class="form-control" id="inputContrasenia">
+                    <input type="password" th:field="*{password}" class="form-control" id="inputContrasenia">
                 </div>
                 <div class="col-md-6">
                     <label for="inputConfirmarContrasenia" class="form-label">Confirmar contraseña</label>
-                    <input type="password" class="form-control" id="inputConfirmarContrasenia">
+                    <input type="password" th:field="*{confirmarPassword}" class="form-control" id="inputConfirmarContrasenia">
                 </div>
                 <div class="col-12">
                     <label for="inputEmail" class="form-label">Correo electronico</label>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="ejemplo@gmail.com">
-                </div>
-                <div class="col-12">
-                    <label for="inputConfirmEmail" class="form-label">Confirmar correo electronico</label>
-                    <input type="email" class="form-control" id="inputConfirmEmail" placeholder="ejemplo@gmail.com">
+                    <input type="email" th:field="*{email}" class="form-control" id="inputEmail" placeholder="ejemplo@gmail.com">
                 </div>
                 <div class="col-md-12">
-                    <label for="inputTelefono" class="form-label">Numero de celular</label>
-                    <input type="tel" class="form-control" id="inputTelefono">
+                    <label for="inputTelefono" class="form-label">Numero de telefono</label>
+                    <input type="tel" th:field="*{telefono}" class="form-control" id="inputTelefono">
                 </div>
 
                 <div class="d-flex justify-content-center gap-5 mt-4">
-                    <a th:href="@{/menuPrincipal}" class="btn btn-hydro-outline px-4 py-2">
-                        Guardar
-                    </a>
+                    <button type="button"
+                            class="btn btn-hydro px-4 py-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmModal">
+                        Editar información
+                    </button>
                     <a th:href="@{/menuPrincipal}" class="btn btn-hydro px-4 py-2">
                         Cancelar
                     </a>
@@ -59,13 +58,62 @@
         </div>
     </div>
 
+    <!-- MENSAJES FLASH -->
+    <div class="d-flex justify-content-center">
+        <div class="w-40">
+            <div th:if="${msg}"
+                 class="alert alert-success alert-dismissible fade show text-center mt-3"
+                 role="alert">
+                <span th:text="${msg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
 
-    <div class="container d-flex justify-content-center mt-5">
-        <form class="row g-3">
+            <div th:if="${error}"
+                 class="alert alert-danger alert-dismissible fade show text-center mt-3"
+                 role="alert">
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </div>
+    </div>
+    <!-- Modal Confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-        </form>
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar cambios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    ¿Está seguro de que desea cambiar los límites del sensor?
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-hydro"
+                            onclick="enviarFormulario()">
+                        Sí, guardar cambios
+                    </button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function enviarFormulario() {
+        document.querySelector("form").submit();
+        }
+    </script>
 </body>
 
 </html>

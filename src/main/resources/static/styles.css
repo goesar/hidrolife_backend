@@ -18,22 +18,22 @@ body {
     color: var(--hydro-green);
 }
 
-.btn-hydro {
-    background-color: var(--hydro-green);
-    border-color: var(--hydro-green);
-    color: black;
-    font-weight: bold;
-    margin-top: 7px
-}
+/*.btn-hydro {*/
+/*    background-color: var(--hydro-green);*/
+/*    border-color: var(--hydro-green);*/
+/*    color: black;*/
+
+/*    margin-top: 7px*/
+/*}*/
 
 
 
-.btn-hydro:hover {
-    background-color: #1e6f15;
-    border-color: #32c922;
-    color: white;
-    font-weight: bold;
-}
+/*.btn-hydro:hover {*/
+/*    background-color: #1e6f15;*/
+/*    border-color: #32c922;*/
+/*    color: white;*/
+/*    font-weight: bold;*/
+/*}*/
 
 .btn-hydro-outline {
     border: 2px solid var(--hydro-green);
@@ -109,10 +109,13 @@ body {
 
 .sensor-title {
     font-size: 4.5rem;   
-    margin-top: 30px;    
+
 }
 
-
+.subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+}
 /* Quitar flechas en Chrome, Edge, Opera */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -148,5 +151,305 @@ input[type=number] {
 }
 
 .form-label { 
-    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.no-aplica {
+    opacity: .45;
+    pointer-events: none;
+}
+
+.bloque-fecha {
+    width: 173.533px;
+}
+
+.panel-dark {
+    background: radial-gradient(
+            circle at top center,
+            #2a2a2a 0%,
+            #202020 45%,
+            #1a1a1a 100%
+    );
+
+    border-radius: 18px;
+
+    box-shadow:
+            0 18px 45px rgba(0, 0, 0, 0.6),
+            0 0 0 1px rgba(255, 255, 255, 0.05);
+
+
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.btn-buscar-custom{
+    margin-top: 2.1rem;
+    font-size: 1.2rem;
+}
+
+
+
+.icon-circle {
+    position: absolute;
+    left: 22px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    color: #2aa01f;
+    background: #19321c;
+
+    box-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.35);
+}
+.icon-circle svg {
+    stroke-width: 3;   /* prueba 2.5, 3, 3.5 */
+}
+.btn-hydro-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* centra el texto */
+
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 12px 20px;
+
+    background: linear-gradient(
+            to bottom,
+            #4ee23a 0%,
+            #2fc722 100%
+    );
+
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.4);
+
+    font-weight: 600;
+    color: #002f00;
+
+    box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.25),
+            0 12px 28px rgba(0,0,0,0.6);
+}
+
+.btn-hydro-icon:hover {
+    transform: scale(1.03);
+    background: linear-gradient(
+            to bottom,
+            #38c92b 0%,
+            #2aa01f 100%
+    );
+    color: #0f1a0f;
+    font-weight: 600;
+    box-shadow:
+            inset 0 2px 4px rgba(0,0,0,0.35),
+            0 12px 25px rgba(0,0,0,0.65);
+}
+
+.panel-bottom {
+    padding: 20px 20px;
+
+    background: rgba(255,255,255,0.02);
+
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px;
+}
+
+.icon-circle-btn-hydro {
+    position: absolute;
+    left: 22px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    color: #2aa01f;
+    background: #19321c;
+
+    box-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.35);
+}
+.icon-circle-btn-hydro svg {
+    stroke-width: 3;   /* prueba 2.5, 3, 3.5 */
+}
+
+
+
+.btn-hydro {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    font-size: 1.1rem;
+    padding: 12px 40px; /* IMPORTANTE: más espacio lateral */
+
+    background: linear-gradient(
+            to bottom,
+            #4ee23a 0%,
+            #2fc722 100%
+    );
+
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.4);
+
+    font-weight: 600;
+    color: #002f00;
+
+    box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.25),
+            0 12px 28px rgba(0,0,0,0.6);
+}
+
+.btn-hydro .icono {
+    position: absolute;
+    left: 3px;  /* antes estaba en 20px */
+}
+    /* TEXTO REAL */
+.btn-hydro .texto {
+
+        pointer-events: none;
+    }
+.btn-hydro span {
+    padding-left: 12px; /* ajusta 8px–16px a tu gusto */
+}
+.btn-hydro:hover {
+    transform: scale(1.03);
+    background: linear-gradient(
+            to bottom,
+            #38c92b 0%,
+            #2aa01f 100%
+    );
+    color: #0f1a0f;
+    font-weight: 600;
+    box-shadow:
+            inset 0 2px 4px rgba(0,0,0,0.35),
+            0 12px 25px rgba(0,0,0,0.65);
+}
+/*Limitador de tabla*/
+.table-container {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/*Modificar el estilo de la tabla de resultados*/
+/* Modificar el estilo de la tabla de resultados */
+/* ============================= */
+/*        HYDROLIFE TABLE        */
+/* ============================= */
+
+.hydro-table {
+    background-color: #141817;              /* neutro oscuro */
+    color: #e8f1ea;
+
+    overflow: hidden;
+    border: 1px solid rgba(78, 226, 58, 0.08);
+}
+
+/* HEADER */
+.hydro-table thead th {
+    background-color: rgba(67, 223, 43, 0.85);
+    color: #0f1a0f;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+
+/* CELDAS */
+.hydro-table td {
+    background-color: #141817;
+    color: #e8f1ea;
+    vertical-align: middle;
+}
+
+/* FILAS */
+.hydro-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+/* FILAS ALTERNADAS */
+.hydro-table tbody tr:nth-child(even) td{
+    background-color: #1f2624;
+}
+
+/* HOVER */
+.hydro-table.table-hover tbody tr:hover {
+    background-color: rgba(78, 226, 58, 0.08);
+    transition: background-color 0.2s ease;
+}
+
+/*Configuracion Boton para desactivar*/
+.btn-deactived {
+    background-color: rgba(67, 223, 43, 0.85);
+
+    padding: 2px 4px;
+
+}
+.btn-deactived:hover {
+    transform: scale(1.03);
+    background: #2aa01f
+    ;
+    color: #0f1a0f;
+}
+
+/*Configuracion boton ventana de confirmacion*/
+.btn-hydro-confirm {
+    border: 2px solid var(--hydro-green);
+    background-color: #32c922;
+    border-color: var(--hydro-green);
+    color: black;
+
+}
+
+.btn-hydro-confirm:hover {
+    background-color: #0f5e03;
+    transform: scale(1.03);
+    border-color: #32c922;
+    color: white;
+}
+
+.btn-hydro-confirm-outline {
+    border: 2px solid var(--hydro-green);
+    color: var(--hydro-green);
+    background-color: transparent;
+}
+
+
+.btn-hydro-confirm-outline:hover {
+    transform: scale(1.03);
+    border-color: var(--hydro-green);
+    background: rgba(84, 175, 80, 0.72);
+}
+
+.modal-content {
+    background-color: #1a1f1d;
+    color: #e8f1ea;
+    border-radius: 14px;
+
+}
+
+.modal-header{
+    color: var(--hydro-green);
+}
+.modal-title{
+    font-size: 1.5rem;
+}
+.modal-body{
+    vertical-align: center;
+}
+.modal-footer {
+    padding: 10px 10px;
+    border: none !important;
 }

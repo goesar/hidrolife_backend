@@ -11,6 +11,4 @@ public class LecturaDTO {
     private Double temperatura;
     private Double ph;
     private Double tds;
-    private LocalDateTime fechaYHora;
-
 }

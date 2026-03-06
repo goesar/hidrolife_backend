@@ -7,6 +7,8 @@ package com.hidrolife.beta.repository;
 import com.hidrolife.beta.model.Actividad;
 import com.hidrolife.beta.model.Cultivo;
 import com.hidrolife.beta.model.Usuario;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -20,27 +22,31 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CultivoRepository extends JpaRepository<Cultivo, Long> {
 
-    public List<Cultivo> findByNombreContainingIgnoreCase(String valor);
+    List<Cultivo> findByNombreContainingIgnoreCaseAndActivoTrue(String nombre);
 
-    List<Cultivo> findByPhIdeal(Double ph);
+    List<Cultivo> findByPhIdealAndActivoTrue(Double ph);
 
 
-    public List<Cultivo> findByTdsIdealAndFechaBetween(Double tdsIdeal, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Cultivo> findByTdsIdealAndFechaBetweenAndActivoTrue(Double tdsIdeal, LocalDate fechaInicio, LocalDate fechaFin);
 
-    public List<Cultivo> findByIdCultivoAndFechaBetween(Long idCultivo, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Cultivo> findByIdCultivoAndFechaBetweenAndActivoTrue(Long idCultivo, LocalDate fechaInicio, LocalDate fechaFin);
 
-    public List<Cultivo> findByNombreContainingIgnoreCaseAndFechaBetween(String valor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Cultivo> findByNombreContainingIgnoreCaseAndFechaBetweenAndActivoTrue(String valor, LocalDate fechaInicio, LocalDate fechaFin);
 
-    List<Cultivo> findByPhIdealAndFechaBetween(
+    List<Cultivo> findByPhIdealAndFechaBetweenAndActivoTrue(
         Double phIdeal,
-        LocalDateTime fechaInicio,
-        LocalDateTime fechaFin
+        LocalDate fechaInicio,
+        LocalDate fechaFin
 );
 
-    public List<Cultivo> findByTdsIdeal(Double tds);
+    public List<Cultivo> findByTdsIdealAndActivoTrue(Double tds);
 
-    public List<Cultivo> findByNumeroPlantas(Integer plantas);
+    public List<Cultivo> findByNumeroPlantasAndActivoTrue(Integer plantas);
 
-    public List<Cultivo> findByFechaBetween(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Cultivo> findByFechaBetweenAndActivoTrue(LocalDate fechaInicio, LocalDate fechaFin);
 
+    List<Cultivo> findByIdCultivoAndActivoTrue(Double idCultivo);
+
+
+    List<Cultivo> findByActivoTrue();
 }

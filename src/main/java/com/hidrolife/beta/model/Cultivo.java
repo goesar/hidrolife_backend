@@ -8,9 +8,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 
@@ -26,12 +29,14 @@ public class Cultivo {
     private Integer numeroPlantas;
     private Double phIdeal;
     private Double tdsIdeal;
-    private LocalDateTime fecha;
+
+    private LocalDate fecha;
+    private boolean activo = true;
 
     public Cultivo() {
     }
 
-    public Cultivo(Long idCultivo, String nombre, Integer numeroPlantas, Double phIdeal, Double tdsIdeal, LocalDateTime fecha) {
+    public Cultivo(Long idCultivo, String nombre, Integer numeroPlantas, Double phIdeal, Double tdsIdeal, LocalDate fecha) {
         this.idCultivo = idCultivo;
         this.nombre = nombre;
         this.numeroPlantas = numeroPlantas;

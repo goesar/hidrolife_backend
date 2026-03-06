@@ -15,16 +15,19 @@
 </head>
 
 <body>
-    <div class="container mt-4">
-        <a th:href="@{/menuPrincipal}" class="btn btn-hydro px-3 py-1">
-            <i class="bi bi-arrow-left-circle me-2"></i>
-            <span>Volver al menú</span>
+<div class="d-flex p-4">
+    <a th:href="@{/menuPrincipal}" class="btn btn-hydro py-2">
+        <span class="icono">
+            <i data-lucide="circle-arrow-left"></i>
 
-        </a>
-    </div>
+        </span>
+        <span class="texto">Volver al menú</span>
+
+    </a>
+</div>
 
     <!-- Títulos -->
-    <div class="container text-center mt-5">
+    <div class="container text-center mt-2">
         <h1 class="mb-2 hydro-title">Panel de sensores</h1>
 
         <h2 class="fw-normal">Seleccione la el sensor que desea observar</h2>
@@ -68,7 +71,10 @@
         </div>
     </div>
 
-
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
 </body>
 
 </html>

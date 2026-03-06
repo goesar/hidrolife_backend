@@ -1,9 +1,6 @@
 package com.hidrolife.beta.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,15 +18,21 @@ public class Usuario {
     private String telefono;
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
+    private boolean activo;
+
     public Usuario() {
     }
 
-    public Usuario(Long idUsuario, String nombre, String email, String telefono, String password) {
+    public Usuario(Long idUsuario, String nombre, String email, String telefono, String password, Rol rol, boolean activo) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
         this.password = password;
+        this.rol = rol;
+        this.activo = activo;
     }
 
 }

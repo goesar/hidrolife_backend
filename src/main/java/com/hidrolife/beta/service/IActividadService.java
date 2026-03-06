@@ -5,6 +5,8 @@
 package com.hidrolife.beta.service;
 
 import com.hidrolife.beta.model.Usuario;
+
+import java.time.LocalDate;
 import java.util.List;
 import com.hidrolife.beta.model.Actividad;
 import java.time.LocalDateTime;
@@ -16,7 +18,14 @@ public interface IActividadService {
     
     public List<Actividad> buscar(String criterio, String valor);
     public List<Actividad> listarTodo();
-    public void saveActividad(String actividades,String usuario, LocalDateTime fecha, String descripcion);
-    public List<Actividad> buscarPorCriterioYFecha(String criterio, String valor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
-    public List<Actividad> buscarPorRangoFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+
+    Actividad obtenerActividad(Long id);
+
+    public void saveActividad(String actividades, String usuario, LocalDate fecha, String descripcion);
+    public List<Actividad> buscarPorCriterioYFecha(String criterio, String valor, LocalDate fechaInicio, LocalDate fechaFin);
+    public List<Actividad> buscarPorRangoFecha(LocalDate fechaInicio, LocalDate fechaFin);
+
+    void actualizarCultivo(Long id, String actividades, LocalDate fecha, String usuario, String descripcion);
+
+    void desactivarActividad(Long id);
 }

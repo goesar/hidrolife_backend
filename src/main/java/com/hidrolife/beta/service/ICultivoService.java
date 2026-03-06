@@ -5,24 +5,32 @@
 package com.hidrolife.beta.service;
 
 import com.hidrolife.beta.model.Actividad;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import com.hidrolife.beta.model.Cultivo;
+import com.hidrolife.beta.model.Usuario;
+
 import java.time.LocalDateTime;
 /**
  *
  * @author Esteban
  */
 public interface ICultivoService {
-    public List<Cultivo> getCultivos();
+
+
+    Cultivo obtenerCultivo(Long id);
+
     public List<Cultivo> buscar(String criterio, String valor);
     
-    public void saveCultivo(String nombre, Integer numeroPlantas, Double phIdeal, Double tdsIdeal, LocalDateTime fecha);
-    public void deleteCultivo(Long idCultivo);
-    public Cultivo cultivo(Long idCultivo);
+    public void saveCultivo(String nombre, Integer numeroPlantas, Double phIdeal, Double tdsIdeal, LocalDate fecha);
+    public void desactivarCultivo(Long idCultivo);
+
     public List<Cultivo> listarTodo();
-    public List<Cultivo> buscarPorRangoFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Cultivo> buscarPorRangoFecha(LocalDate fechaInicio, LocalDate fechaFin);
     
-    public List<Cultivo> buscarPorCriterioYFecha(String criterio, String valor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
-    
+    public List<Cultivo> buscarPorCriterioYFecha(String criterio, String valor, LocalDate fechaInicio, LocalDate fechaFin);
+
+    void actualizarCultivo(Long id, String nombre, Integer numeroPlantas, Double phIdeal, Double tdsIdeal, LocalDate fecha);
 }
