@@ -1,21 +1,40 @@
 package com.hidrolife.beta.service;
 
 import com.hidrolife.beta.dto.LecturaDTO;
+import com.hidrolife.beta.model.ConfiguracionSensor;
 import com.hidrolife.beta.model.LecturaSensor;
+import com.hidrolife.beta.model.TipoSensor;
+import com.hidrolife.beta.repository.ConfiguracionSensorRepository;
 import com.hidrolife.beta.repository.LecturaRepository;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class LecturaService implements ILecturaService {
 
-    @Autowired
-    private LecturaRepository lecturaRepository;
+    private final TelegramService telegramService;
+    private final LecturaRepository lecturaRepository;
+    private final ConfiguracionSensorRepository configuracionSensorRepository;
+    private boolean alertaPhEnviada = false;
+    private LocalDateTime ultimaAlertaTDS;
+    private LocalDateTime ultimaAlertaHumedad;
+    private LocalDateTime ultimaAlertaTemperatura;
+    private LocalDateTime ultimaAlertaPh;
+
+    public LecturaService(TelegramService telegramService, LecturaRepository lecturaRepository, ConfiguracionSensorRepository configuracionSensorRepository) {
+        this.telegramService = telegramService;
+        this.lecturaRepository = lecturaRepository;
+        this.configuracionSensorRepository = configuracionSensorRepository;
+    }
 
     @Override
     public void guardarLectura(LecturaDTO dto) {
+
         LecturaSensor lectura = new LecturaSensor();
 
         lectura.setHumedad(dto.getHumedad());
@@ -23,9 +42,119 @@ public class LecturaService implements ILecturaService {
         lectura.setPh(dto.getPh());
         lectura.setTds(dto.getTds());
         lectura.setFechaYHora(LocalDateTime.now());
+        lectura.setActivo(true);
+
+        Optional<ConfiguracionSensor> configPh =
+                configuracionSensorRepository.findByTipo(TipoSensor.PH);
+
+        Optional<ConfiguracionSensor> configTDS =
+                configuracionSensorRepository.findByTipo(TipoSensor.TDS);
+
+        Optional<ConfiguracionSensor> configHumedad =
+                configuracionSensorRepository.findByTipo(TipoSensor.HUMEDAD);
+
+        Optional<ConfiguracionSensor> configTemperatura =
+                configuracionSensorRepository.findByTipo(TipoSensor.TEMPERATURA);
+
+
+        if (configPh.isPresent()) {
+
+            ConfiguracionSensor config = configPh.get();
+
+            boolean phEstaFueraDeRango =
+                    dto.getPh() < config.getValorMinimo() ||
+                            dto.getPh() > config.getValorMaximo();
+
+
+            if (phEstaFueraDeRango) {
+
+                if (ultimaAlertaPh == null ||
+                        Duration.between(ultimaAlertaPh, LocalDateTime.now()).toSeconds() >= 30) {
+
+                    telegramService.enviarAlerta(
+                            "⚠️ ALERTA HIDROLIFE ⚠️\n" +
+                                    "pH fuera de rango: " + dto.getPh()
+                    );
+
+                    ultimaAlertaPh = LocalDateTime.now();
+                }
+            }
+        }
+
+        if (configTDS.isPresent()){
+
+            ConfiguracionSensor config = configTDS.get();
+            boolean tdsEstaFueraDeRango =
+                    dto.getTds() < config.getValorMinimo() ||
+                            dto.getTds() > config.getValorMaximo();
+
+            if (tdsEstaFueraDeRango) {
+
+                if (ultimaAlertaTDS == null ||
+                        Duration.between(ultimaAlertaTDS, LocalDateTime.now()).toSeconds() >= 30) {
+
+                    telegramService.enviarAlerta(
+                            "⚠️ ALERTA HIDROLIFE ⚠️\n" +
+                                    "TDS fuera de rango: " + dto.getTds()
+                    );
+
+                    ultimaAlertaTDS = LocalDateTime.now();
+                }
+            }
+
+        }
+        if (configHumedad.isPresent()) {
+
+            ConfiguracionSensor config = configHumedad.get();
+
+            boolean humedadEstaFueraDeRango =
+                    dto.getHumedad() < config.getValorMinimo() ||
+                            dto.getHumedad() > config.getValorMaximo();
+
+
+            if (humedadEstaFueraDeRango) {
+
+                if (ultimaAlertaHumedad == null ||
+                        Duration.between(ultimaAlertaHumedad, LocalDateTime.now()).toSeconds() >= 30) {
+
+                    telegramService.enviarAlerta(
+                            "⚠️ ALERTA HIDROLIFE ⚠️\n" +
+                                    "Humedad fuera de rango: " + dto.getHumedad()
+                    );
+
+                    ultimaAlertaHumedad = LocalDateTime.now();
+                }
+            }
+        }
+
+        if (configTemperatura.isPresent()) {
+
+            ConfiguracionSensor config = configTemperatura.get();
+
+            boolean temperaturaEstaFueraDeRango =
+                    dto.getTemperatura() < config.getValorMinimo() ||
+                            dto.getTemperatura() > config.getValorMaximo();
+
+
+            if (temperaturaEstaFueraDeRango) {
+
+                if (ultimaAlertaTemperatura == null ||
+                        Duration.between(ultimaAlertaTemperatura, LocalDateTime.now()).toSeconds() >= 30) {
+
+                    telegramService.enviarAlerta(
+                            "⚠️ ALERTA HIDROLIFE ⚠️\n" +
+                                    "Temperatura fuera de rango: " + dto.getTemperatura()
+                    );
+
+                    ultimaAlertaTemperatura = LocalDateTime.now();
+                }
+            }
+        }
 
         lecturaRepository.save(lectura);
     }
+
+
 
     @Override
     public List<LecturaSensor> listarTodo() {
@@ -139,7 +268,7 @@ public class LecturaService implements ILecturaService {
 
     @Override
     public LecturaDTO obtenerUltimaLectura() {
-         
+
         LecturaSensor ultima = lecturaRepository.findTopByOrderByIdLecturaDesc();
 
         if (ultima == null) return null;
@@ -149,10 +278,22 @@ public class LecturaService implements ILecturaService {
         dto.setPh(ultima.getPh());
         dto.setTds(ultima.getTds());
         dto.setTemperatura(ultima.getTemperatura());
-        dto.setFechaYHora(ultima.getFechaYHora());
-        
+
 
         return dto;
+    }
+
+    @Override
+    public void desactivarLectura(Long id) {
+        LecturaSensor lectura = obtenerLectura(id);
+        lectura.setActivo(false);
+        lecturaRepository.save(lectura);
+    }
+
+    @Override
+    public LecturaSensor obtenerLectura(Long id) {
+        return lecturaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cultivo no encontrado"));
     }
 
 }

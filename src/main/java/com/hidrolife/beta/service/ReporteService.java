@@ -53,7 +53,7 @@ public class ReporteService {
         doc.setMargins(20, 20, 20, 20);
 
         // Formato de fecha estándar
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         // --- HEADER (Logo pequeño + Título centrado) ---
         try {

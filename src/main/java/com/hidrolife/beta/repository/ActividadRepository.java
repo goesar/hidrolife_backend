@@ -6,6 +6,8 @@ package com.hidrolife.beta.repository;
 
 import com.hidrolife.beta.model.Actividad;
 import com.hidrolife.beta.model.Usuario;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -19,20 +21,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActividadRepository extends JpaRepository<Actividad, Long> {
 
-    public List<Actividad> findByActividadesContainingIgnoreCase(String valor);
+    public List<Actividad> findByActividadesContainingIgnoreCaseAndActivoTrue(String valor);
 
-    public List<Actividad> findByUsuarioContainingIgnoreCase(String valor);
+    public List<Actividad> findByUsuarioContainingIgnoreCaseAndActivoTrue(String valor);
 
 
-    public List<Actividad> findByFechaBetween(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Actividad> findByFechaBetweenAndActivoTrue(LocalDate fechaInicio, LocalDate fechaFin);
 
-    public List<Actividad> findByIdActividadAndFechaBetween(Long idActividad, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Actividad> findByIdActividadAndFechaBetweenAndActivoTrue(Long idActividad, LocalDate fechaInicio, LocalDate fechaFin);
 
-    public List<Actividad> findByActividadesContainingIgnoreCaseAndFechaBetween(String valor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Actividad> findByActividadesContainingIgnoreCaseAndFechaBetweenAndActivoTrue(String valor, LocalDate fechaInicio, LocalDate fechaFin);
 
-    public List<Actividad> findByUsuarioContainingIgnoreCaseAndFechaBetween(String valor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    public List<Actividad> findByUsuarioContainingIgnoreCaseAndFechaBetweenAndActivoTrue(String valor, LocalDate fechaInicio, LocalDate fechaFin);
 
-   
 
-    
+    List<Actividad> findByActivoTrue();
 }

@@ -5,12 +5,14 @@
 package com.hidrolife.beta.service;
 
 import com.hidrolife.beta.model.Actividad;
-import com.hidrolife.beta.model.Usuario;
 import com.hidrolife.beta.repository.ActividadRepository;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +23,7 @@ public class ActividadService implements IActividadService {
 
     public void saveActividad(
             String actividades,
-            LocalDateTime fecha,
+            LocalDate fecha,
             String usuario,
             String descripcion
     ) {
@@ -32,7 +34,7 @@ public class ActividadService implements IActividadService {
         actividad.setFecha(fecha);
         actividad.setUsuario(usuario);
         actividad.setDescripcion(descripcion);
-
+        actividad.setActivo(true);
         actividadRepository.save(actividad);
     }
 
@@ -54,10 +56,10 @@ public class ActividadService implements IActividadService {
                 }
 
             case "actividades":
-                return actividadRepository.findByActividadesContainingIgnoreCase(valor);
+                return actividadRepository.findByActividadesContainingIgnoreCaseAndActivoTrue(valor);
 
             case "usuario":
-                return actividadRepository.findByUsuarioContainingIgnoreCase(valor);
+                return actividadRepository.findByUsuarioContainingIgnoreCaseAndActivoTrue(valor);
 
 
             default:
@@ -67,43 +69,84 @@ public class ActividadService implements IActividadService {
 
     @Override
     public List<Actividad> listarTodo() {
-        return actividadRepository.findAll();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean esAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (esAdmin) {
+            return actividadRepository.findAll();
+        } else {
+            return actividadRepository.findByActivoTrue();
+        }
     }
 
     @Override
-    public List<Actividad> buscarPorRangoFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        return actividadRepository.findByFechaBetween(fechaInicio, fechaFin);
+    public List<Actividad> buscarPorRangoFecha(LocalDate fechaInicio, LocalDate fechaFin) {
+        return actividadRepository.findByFechaBetweenAndActivoTrue(fechaInicio, fechaFin);
     }
 
-   
+    @Override
+    public void actualizarCultivo(Long id,
+                                  String actividades,
+                                  LocalDate fecha,
+                                  String usuario,
+                                  String descripcion
+                                  ) {
+
+        Actividad actividad = actividadRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Actividad no encontrada"));
+
+        actividad.setActividades(actividades);
+        actividad.setFecha(fecha);
+        actividad.setUsuario(usuario);
+        actividad.setDescripcion(descripcion);
+
+
+        actividadRepository.save(actividad); // Hibernate hace UPDATE automáticamente
+    }
+
+    @Override
+    public void desactivarActividad(Long id) {
+        Actividad actividad = obtenerActividad(id);
+        actividad.setActivo(false);
+        actividadRepository.save(actividad);
+    }
+
+    @Override
+    public Actividad obtenerActividad(Long id) {
+        return actividadRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Actividad no encontrado"));
+    }
 
 
     @Override
-    public void saveActividad(String actividades, String usuario, LocalDateTime fecha, String descripcion) {
+    public void saveActividad(String actividades, String usuario, LocalDate fecha, String descripcion) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Actividad> buscarPorCriterioYFecha(String criterio, String valor, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+    public List<Actividad> buscarPorCriterioYFecha(String criterio, String valor, LocalDate fechaInicio, LocalDate fechaFin) {
 
         switch (criterio) {
 
             case "id":
                 try {
                     Long idActividad = Long.parseLong(valor);
-                    return actividadRepository.findByIdActividadAndFechaBetween(idActividad, fechaInicio, fechaFin);
+                    return actividadRepository.findByIdActividadAndFechaBetweenAndActivoTrue(idActividad, fechaInicio, fechaFin);
                 } catch (NumberFormatException e) {
                     return List.of();
                 }
 
             case "actividades":
-                return actividadRepository.findByActividadesContainingIgnoreCaseAndFechaBetween(valor, fechaInicio, fechaFin);
+                return actividadRepository.findByActividadesContainingIgnoreCaseAndFechaBetweenAndActivoTrue(valor, fechaInicio, fechaFin);
 
             case "usuario":
-                return actividadRepository.findByUsuarioContainingIgnoreCaseAndFechaBetween(valor, fechaInicio, fechaFin);
+                return actividadRepository.findByUsuarioContainingIgnoreCaseAndFechaBetweenAndActivoTrue(valor, fechaInicio, fechaFin);
 
             case "fecha":
-                return actividadRepository.findByFechaBetween(fechaInicio, fechaFin);
+                return actividadRepository.findByFechaBetweenAndActivoTrue(fechaInicio, fechaFin);
 
             default:
                 return List.of();

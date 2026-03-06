@@ -5,9 +5,12 @@
 package com.hidrolife.beta.controller;
 
 import com.hidrolife.beta.service.ActividadService;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,7 +23,7 @@ public class ActividadController {
     @PostMapping("/guardarActividad")
     public String guardarActividad(
             @RequestParam String actividades,
-            @RequestParam LocalDateTime fecha,
+            @RequestParam LocalDate fecha,
             @RequestParam String usuario,
             @RequestParam String descripcion,
             RedirectAttributes redirectAttributes) {
@@ -42,5 +45,43 @@ public class ActividadController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/baseDatos"; // tu HTML
         }
+    }
+
+    @PostMapping("/editarActividad/{id}")
+    public String editarActividad(
+            @PathVariable Long id,
+            @RequestParam String actividades,
+            @RequestParam LocalDate fecha,
+            @RequestParam String usuario,
+            @RequestParam String descripcion,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+
+            actividadService.actualizarCultivo(id, actividades, fecha, usuario, descripcion);
+
+            redirectAttributes.addFlashAttribute("msg", "Actividad actualizada correctamente");
+            return "redirect:/baseDatos";
+
+        } catch (IllegalArgumentException e) {
+
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/baseDatos";
+        }
+    }
+
+    @PostMapping("/actividad/{id}/desactivar")
+    public String desactivarActividad(
+            @PathVariable("id") Long id,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            actividadService.desactivarActividad(id);
+            redirectAttributes.addFlashAttribute("msg", "Cultivo desactivado correctamente");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/baseDatos?tabla=Cultivos";
     }
 }

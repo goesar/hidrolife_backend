@@ -24,5 +24,8 @@ public interface ILecturaService {
     List<LecturaSensor> buscarPorCriterioYFecha(String criterio, String valor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
     public LecturaDTO obtenerUltimaLectura();
-    
+
+    void desactivarLectura(Long id);
+
+    LecturaSensor obtenerLectura(Long id);
 }

@@ -13,22 +13,28 @@
 
 <body>
 
+<div class="d-flex justify-content-end p-4">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-hydro px-4 py-2">
+            Cerrar sesión
+        </button>
+    </form>
+</div>
+<!-- Títulos -->
+<div class="container text-center mt-2">
+    <h1 class="mb-2 hydro-title">Bienvenido a Hidrolife</h1>
 
-    <!-- Títulos -->
-    <div class="container text-center mt-5">
-        <h1 class="mb-2 hydro-title">Bienvenido a Hidrolife</h1>
+    <h2 class="fw-normal">Seleccione la funcion que desea ejecutar</h2>
+</div>
 
-        <h2 class="fw-normal">Seleccione la funcion que desea ejecutar</h2>
-    </div>
-
-    <div class="container mt-5">
+<div class="container mt-3">
     <div class="row justify-content-center g-5 mt-1">
 
         <!-- BOTÓN 1 -->
         <div class="col-12 col-md-4 col-lg-3">
             <a th:href="@{/baseDatos}" class="big-icon-btn">
                 <i class="bi bi-database"></i>
-                <span>Registro de cultivos</span>
+                <span>Gestión</span>
             </a>
         </div>
 
@@ -44,13 +50,12 @@
         <div class="col-12 col-md-4 col-lg-3">
             <a th:href="@{/editarUsuario}" class="big-icon-btn">
                 <i class="bi bi-person-lines-fill"></i>
-                <span>Configuracion de usuario</span>
+                <span>Perfil</span>
             </a>
         </div>
 
     </div>
 </div>
-
 
 
 </body>

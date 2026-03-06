@@ -59,24 +59,24 @@ public class ReporteController {
                 if (valor == null || valor.isBlank()) {
                     if (fechaInicio == null || fechaFin == null)
                         return actividadService.listarTodo();
-                    return actividadService.buscarPorRangoFecha(fechaInicio.atStartOfDay(), fechaFin.atTime(23,59,59));
+                    return actividadService.buscarPorRangoFecha(fechaInicio, fechaFin);
                 }
                 if (fechaInicio == null || fechaFin == null)
                     return actividadService.buscar(criterio, valor);
                 return actividadService.buscarPorCriterioYFecha(criterio, valor,
-                        fechaInicio.atStartOfDay(), fechaFin.atTime(23,59,59));
+                        fechaInicio, fechaFin);
             }
 
             case "Cultivos" -> {
                 if (valor == null || valor.isBlank()) {
                     if (fechaInicio == null || fechaFin == null)
                         return cultivoService.listarTodo();
-                    return cultivoService.buscarPorRangoFecha(fechaInicio.atStartOfDay(), fechaFin.atTime(23,59,59));
+                    return cultivoService.buscarPorRangoFecha(fechaInicio, fechaFin);
                 }
                 if (fechaInicio == null || fechaFin == null)
                     return cultivoService.buscar(criterio, valor);
                 return cultivoService.buscarPorCriterioYFecha(criterio, valor,
-                        fechaInicio.atStartOfDay(), fechaFin.atTime(23,59,59));
+                        fechaInicio, fechaFin);
             }
 
             case "Usuarios" -> {

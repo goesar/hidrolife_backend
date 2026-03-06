@@ -15,6 +15,9 @@ import com.hidrolife.beta.service.UsuarioService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,18 +43,36 @@ public class BusquedaController {
             @RequestParam(required = false) LocalDate fechaFin,
             Model model) {
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean esAdmin = auth.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (tabla.equals("Usuarios") && !esAdmin) {
+            throw new AccessDeniedException("No autorizado");
+        }
+
         model.addAttribute("tablaActual", tabla);
 
         boolean tieneValor = valor != null && !valor.isEmpty();
         boolean tieneRango = fechaInicio != null && fechaFin != null;
 
+
+        LocalDate inicioD = null;
+        LocalDate finD = null;
+
         LocalDateTime inicioDT = null;
         LocalDateTime finDT = null;
 
         if (tieneRango) {
+            inicioD = fechaInicio;
+            finD = fechaFin;
+
             inicioDT = fechaInicio.atStartOfDay();
-            finDT = fechaFin.atTime(23, 59, 59);
+            finDT = fechaFin.plusDays(1).atStartOfDay().minusNanos(1);
         }
+
         // LISTA GENÉRICA PARA RESULTADOS
         Object resultados = null;
 
@@ -64,11 +85,11 @@ public class BusquedaController {
                 if (!tieneValor && !tieneRango) {
                     resultados = actividadService.listarTodo();
                 } else if (!tieneValor) {
-                    resultados = actividadService.buscarPorRangoFecha(inicioDT, finDT);
+                    resultados = actividadService.buscarPorRangoFecha(fechaInicio, fechaFin);
                 } else if (!tieneRango) {
                     resultados = actividadService.buscar(criterio, valor);
                 } else {
-                    resultados = actividadService.buscarPorCriterioYFecha(criterio, valor, inicioDT, finDT);
+                    resultados = actividadService.buscarPorCriterioYFecha(criterio, valor, fechaInicio, fechaFin);
                 }
             }
 
@@ -79,11 +100,11 @@ public class BusquedaController {
                 if (!tieneValor && !tieneRango) {
                     resultados = cultivoService.listarTodo();
                 } else if (!tieneValor) {
-                    resultados = cultivoService.buscarPorRangoFecha(inicioDT, finDT);
+                    resultados = cultivoService.buscarPorRangoFecha(fechaInicio, fechaFin);
                 } else if (!tieneRango) {
                     resultados = cultivoService.buscar(criterio, valor);
                 } else {
-                    resultados = cultivoService.buscarPorCriterioYFecha(criterio, valor, inicioDT, finDT);
+                    resultados = cultivoService.buscarPorCriterioYFecha(criterio, valor, fechaInicio, fechaFin);
                 }
             }
 
@@ -121,10 +142,10 @@ public class BusquedaController {
 
         // LO QUE SE GUARDA PARA RECARGAR INPUTS
         model.addAttribute("resultados", resultados);
-        model.addAttribute("criterioActual", criterio);
-        model.addAttribute("valorActual", valor);
-        model.addAttribute("fechaInicioActual", fechaInicio);
-        model.addAttribute("fechaFinActual", fechaFin);
+        model.addAttribute("criterio", criterio);
+        model.addAttribute("valor", valor);
+        model.addAttribute("fechaInicio", fechaInicio);
+        model.addAttribute("fechaFin", fechaFin);
 
         return "baseDatos";
     }

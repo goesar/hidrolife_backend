@@ -23,5 +23,5 @@ public class LecturaSensor {
     private Double ph;
     private Double tds;
     private LocalDateTime fechaYHora;
-    
+    private boolean activo = true;
 }

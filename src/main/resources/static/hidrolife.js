@@ -80,10 +80,26 @@ function actualizarTemperatura() {
 }
 
 
-setInterval(actualizarTemperatura, 2000);
-actualizarTemperatura();
+// setInterval(actualizarTemperatura, 2000);
+// actualizarTemperatura();
+//
+// setInterval(actualizarTDS, 2000);
+// actualizarTDS();
+// setInterval(actualizarHumedad, 2000);
+// actualizarHumedad();
 
-setInterval(actualizarTDS, 2000);
-actualizarTDS();
-setInterval(actualizarHumedad, 2000);
-actualizarHumedad();
+//Deshabilitar campo de fechas
+document.addEventListener("DOMContentLoaded", () => {
+    const tablaSelect = document.getElementById("tablaSelect");
+    const bloques = document.querySelectorAll(".bloque-fecha");
+
+    function aplicar() {
+        const esUsuarios = tablaSelect.value === "Usuarios";
+        bloques.forEach(b => b.classList.toggle("no-aplica", esUsuarios));
+    }
+
+    tablaSelect.addEventListener("change", aplicar);
+    aplicar();
+});
+
+
