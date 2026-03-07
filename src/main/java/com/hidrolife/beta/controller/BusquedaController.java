@@ -41,6 +41,7 @@ public class BusquedaController {
             @RequestParam(required = false) String valor,
             @RequestParam(required = false) LocalDate fechaInicio,
             @RequestParam(required = false) LocalDate fechaFin,
+            @RequestParam(defaultValue = "0") int pagina,
             Model model) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

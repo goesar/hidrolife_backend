@@ -57,8 +57,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: radial-gradient(
+            circle at center,
+            #2a2a2a 0%,
+            #202020 45%,
+            #1a1a1a 100%
+    );
 
-    background-color: #222;
     border: 2px solid #3BDE26;
     border-radius: 20px;
 
@@ -71,6 +76,7 @@ body {
 
     height: 330px;
 }
+
 
 .big-icon-btn i {
     font-size: 110px;  
@@ -86,9 +92,15 @@ body {
 }
 
 .big-icon-btn:hover {
-    background-color: #3BDE26;
+    background: radial-gradient(
+            circle at center,
+            #3BDE26 0%,
+            #29981a 45%,
+            #1b6a10 100%
+    );
     color: black;
-    transform: translateY(-5px);
+    border: 2px solid #1b6a10;
+    transform: scale(1.035);
 }
 
 .big-icon-card {
@@ -177,11 +189,11 @@ input[type=number] {
             0 18px 45px rgba(0, 0, 0, 0.6),
             0 0 0 1px rgba(255, 255, 255, 0.05);
 
-
-    max-width: 1100px;
-    margin: 0 auto;
     overflow: hidden;
+    
 }
+
+
 
 .btn-buscar-custom{
     margin-top: 2.1rem;
@@ -452,4 +464,130 @@ input[type=number] {
 .modal-footer {
     padding: 10px 10px;
     border: none !important;
+}
+
+/*Modal faq*/
+/* Modal FAQ */
+
+.accordion {
+    border: none;
+}
+
+/* Botón */
+.accordion-button {
+    user-select: none;
+    background-color: #141a17;
+    color: #e6f2ea;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+}
+
+/* Estado abierto */
+.accordion-button:not(.collapsed) {
+    background-color: #18221d;
+    color: #4ee23a;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+}
+
+/* Icono */
+.accordion-button::after {
+    background-image: none;
+    content: "+";
+    font-size: 1.5rem;
+    transform: none;
+}
+
+.accordion-button:not(.collapsed)::after {
+    content: "−";
+}
+
+/* Contenedor del collapse */
+.accordion-collapse {
+    padding: 0;
+    margin: 0;
+}
+
+/* Contenido */
+.accordion-body {
+    background-color: #141a17;
+    color: #dfe9e3;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+}
+
+/* Item */
+.accordion-item {
+    border: none;
+    background: transparent;
+}
+
+/* Focus */
+.accordion-button:focus {
+    box-shadow: 0 0 0 2px rgba(78,226,58,0.35);
+}
+
+/*carrucel*/
+.carousel-item img {
+    height: 550px;
+    object-fit: cover;
+    object-position: top;
+}
+
+/*Es como algo de la pagina principal para que no se vean los iconos por defecto*/summary {
+        list-style: none;
+    }
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::before {
+    content: "+";
+    margin-right: 8px;
+    color: #4ee23a;
+    font-weight: bold;
+}
+summary {
+    cursor: pointer;
+    font-weight: 500;
+}
+details[open] summary::before {
+    content: "−";
+}
+
+details {
+    margin-top: 14px;
+    text-align: left;
+}
+
+details p {
+    margin-top: 6px;
+    color: #cfcfcf;
+}
+
+/*reveal*/
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/*Aliear texto */
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.feature-card:hover {
+    transform: scale(1.025);
+    transition: 0.2s ease;
 }

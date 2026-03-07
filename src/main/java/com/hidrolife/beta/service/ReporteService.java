@@ -32,7 +32,7 @@ public class ReporteService {
     private Cell header(String texto) {
         return new Cell()
                 .add(new Paragraph(texto).setBold().setFontColor(ColorConstants.WHITE))
-                .setBackgroundColor(new DeviceRgb(0, 153, 168))
+                .setBackgroundColor(new DeviceRgb(0, 168, 14))
                 .setTextAlignment(TextAlignment.CENTER)
                 .setPadding(5);
     }

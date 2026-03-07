@@ -31,7 +31,7 @@
 <div class="container-lg mt-5">
 
 
-    <div class="panel-dark p-4">
+    <div class="panel-dark p-4 mx-auto" style="max-width: 1100px">
 
         <form class="row g-3" th:action="@{/buscar}" method="get">
 
@@ -142,7 +142,7 @@
   ============================ -->
     <div th:if="${tablaActual} == 'Actividades'" class="mt-4">
         <div class="table-container">
-            <table class="table table-container table-hover text-center hydro-table">
+            <table class="table table-container table-hover text-center hydro-table paginacion">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -150,7 +150,7 @@
                     <th>Usuario</th>
                     <th>Fecha</th>
                     <th>Cultivo</th>
-                    <th>Descripcion</th>
+                    <th>Descripción</th>
                     <th sec:authorize="hasRole('ADMIN')">Activo</th>
                     <th></th>
                 </tr>
@@ -196,6 +196,7 @@
                 </tbody>
 
             </table>
+            <div class="paginacion-tabla mt-3 text-center"></div>
         </div>
     </div>
 
@@ -204,7 +205,7 @@
          📌 TABLA: CULTIVOS
          ============================ -->
     <div th:if="${tablaActual} == 'Cultivos'" class="mt-4">
-        <table class="table table-container table-hover text-center hydro-table">
+        <table class="table table-container table-hover text-center hydro-table paginacion">
             <thead>
             <tr>
                 <th>ID</th>
@@ -256,6 +257,7 @@
             </tr>
             </tbody>
         </table>
+        <div class="paginacion-tabla mt-3 text-center"></div>
     </div>
 
 
@@ -263,7 +265,7 @@
          📌 TABLA: USUARIOS
          ============================ -->
     <div sec:authorize="hasRole('ADMIN')" th:if="${tablaActual} == 'Usuarios'" class="mt-4">
-        <table class="table table-container table-hover text-center hydro-table">
+        <table class="table table-container table-hover text-center hydro-table paginacion">
             <thead>
             <tr>
                 <th>ID</th>
@@ -299,10 +301,11 @@
             </tr>
             </tbody>
         </table>
+        <div class="paginacion-tabla mt-3 text-center"></div>
     </div>
 
     <div th:if="${tablaActual} == 'Lecturas'" class="mt-4">
-        <table class="table table-container table-hover text-center hydro-table">
+        <table class="table table-container table-hover text-center hydro-table paginacion">
             <thead>
             <tr>
                 <th>ID</th>
@@ -338,6 +341,7 @@
             </tr>
             </tbody>
         </table>
+        <div class="paginacion-tabla mt-3 text-center"></div>
     </div>
 </div>
 
@@ -355,39 +359,43 @@
             <!-- CUERPO DEL MODAL (EL FORMULARIO) -->
             <div class="modal-body">
 
-                <form id="formRegistroActividad" th:action="@{/guardarActividad}" th:object="${actividad}"
+                <form id="formRegistroActividad" action="/guardarActividad"
                       method="post">
-
+                    <input type="hidden"
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}">
+                    <input type="hidden" id="idActividad" name="idActividad">
                     <div class="mb-3">
                         <label class="form-label">Actividad</label>
-                        <input type="text" id="actividades" th:field="*{actividades}" class="form-control" required>
+                        <input type="text" id="actividades" name="actividades" class="form-control">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Fecha</label>
-                        <input type="date" id="fechaA" th:field="*{fecha}" class="form-control" required>
+                        <input type="date" id="fechaA" name="fecha" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Persona</label>
-                        <input type="text" id="usuario" th:field="*{usuario}" class="form-control" required>
+                        <input type="text" id="usuario" name="usuario" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Descripcion</label>
-                        <input type="text" id="descripcion" th:field="*{descripcion}" class="form-control" required>
+                        <input type="text" id="descripcion" name="descripcion" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Cultivo</label>
 
-                        <select id="nombreCultivo" th:field="*{cultivo}" class="form-select" required>
+                        <select id="nombreCultivo" name="idCultivo" class="form-select" required>
                             <option value="">Seleccione un cultivo...</option>
 
-                            <!-- OPCIONES CARGADAS DINÁMICAMENTE -->
                             <option th:each="c : ${cultivos}"
                                     th:value="${c.idCultivo}"
-                                    th:text="${c.nombre}"></option>
+                                    th:text="${c.nombre}">
+                            </option>
+
                         </select>
                     </div>
                     <button id="btnRegistroActividad" class="btn btn-hydro-confirm" type="submit">Guardar actividad
@@ -594,6 +602,7 @@
 
                 document.getElementById("tituloRegistro").textContent = "Editar actividad";
                 document.getElementById("btnRegistroActividad").textContent = "Guardar cambios";
+                document.getElementById("idActividad").value = id;
                 document.getElementById("actividades").value = button.getAttribute('data-actividades');
                 document.getElementById("fechaA").value = button.getAttribute('data-fecha');
                 document.getElementById("usuario").value = button.getAttribute('data-usuario');
@@ -604,15 +613,108 @@
                 document.getElementById("formRegistroActividad").action = "/editarActividad/" + id;
 
             } else {
-                document.getElementById("tituloModal").textContent = "Nuevo Cultivo";
-                document.getElementById("btnModalCultivo").textContent = "Guardar";
+                document.getElementById("tituloRegistro").textContent = "Nueva actividad";
+                document.getElementById("btnRegistroActividad").textContent = "Guardar";
                 document.getElementById("formRegistroActividad").action = "/guardarActividad";
+                document.getElementById("idActividad").value = "";
 
                 // 🔥 Limpia TODO el formulario automáticamente
                 document.getElementById("formRegistroActividad").reset();
             }
         });
 
+
+</script>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const filasPorPagina = 10;
+        const tablas = document.querySelectorAll(".paginacion");
+
+        tablas.forEach(tabla => {
+
+            const filas = tabla.querySelectorAll("tbody tr");
+
+            if (!filas.length) return;
+
+            // crear contenedor automáticamente
+            const contenedor = document.createElement("div");
+            contenedor.className = "mt-3 text-center";
+            tabla.after(contenedor);
+
+            let paginaActual = 1;
+            const totalPaginas = Math.ceil(filas.length / filasPorPagina);
+
+            function mostrarPagina(pagina) {
+
+                paginaActual = pagina;
+
+                filas.forEach((fila, index) => {
+
+                    const inicio = (pagina - 1) * filasPorPagina;
+                    const fin = inicio + filasPorPagina;
+
+                    fila.style.display =
+                        (index >= inicio && index < fin) ? "" : "none";
+
+                });
+
+                renderPaginacion();
+            }
+
+            function renderPaginacion() {
+
+                contenedor.innerHTML = "";
+
+                const rango = 2; // cuántas páginas mostrar alrededor
+
+                const inicio = Math.max(1, paginaActual - rango);
+                const fin = Math.min(totalPaginas, paginaActual + rango);
+
+                if (paginaActual > 1) {
+
+                    const prev = document.createElement("button");
+                    prev.innerText = "«";
+                    prev.className = "btn btn-deactived mx-1";
+                    prev.onclick = () => mostrarPagina(paginaActual - 1);
+                    contenedor.appendChild(prev);
+
+                }
+
+                for (let i = inicio; i <= fin; i++) {
+
+                    const btn = document.createElement("button");
+                    btn.innerText = i;
+                    btn.className = "btn btn-deactived mx-1";
+
+                    if (i === paginaActual) {
+                        btn.style.opacity = "0.6";
+                    }
+
+                    btn.onclick = () => mostrarPagina(i);
+
+                    contenedor.appendChild(btn);
+                }
+
+                if (paginaActual < totalPaginas) {
+
+                    const next = document.createElement("button");
+                    next.innerText = "»";
+                    next.className = "btn btn-deactived mx-1";
+                    next.onclick = () => mostrarPagina(paginaActual + 1);
+                    contenedor.appendChild(next);
+
+                }
+
+            }
+
+            mostrarPagina(1);
+
+        });
+
+    });
 
 </script>
 </body>

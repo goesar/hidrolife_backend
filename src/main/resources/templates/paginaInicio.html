@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>HidroLife</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+
+    <a class="navbar-brand fw-bold hydro-title" href="#">HidroLife</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
+
+        <span class="navbar-toggler-icon"></span>
+
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+        <ul class="navbar-nav gap-3">
+
+            <li class="nav-item">
+                <a class="nav-link" href="#inicio">Inicio</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#plataforma">Plataforma</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#funcionamiento">Funcionamiento</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#tecnologia">Tecnología</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#contacto">Contacto</a>
+            </li>
+
+            <li class="nav-item">
+                <a th:href="@{/login}" class="btn btn-hydro-confirm px-4">
+                    Acceder
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</nav>
+
+<div class="container mt-5">
+
+
+    <div id="carouselHidroLife" class="carousel slide" data-bs-ride="carousel">
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <img src="/img/img1.png" class="d-block w-100 rounded">
+            </div>
+
+            <div class="carousel-item">
+                <img src="/img/img2.png" class="d-block w-100 rounded">
+            </div>
+
+            <div class="carousel-item">
+                <img src="/img/img3.png" class="d-block w-100 rounded">
+            </div>
+
+            <div class="carousel-item">
+                <img src="/img/img4.png" class="d-block w-100 rounded">
+            </div>
+
+        </div>
+
+        <!-- Botón anterior -->
+        <button class="carousel-control-prev" type="button"
+                data-bs-target="#carouselHidroLife"
+                data-bs-slide="prev">
+
+            <span class="carousel-control-prev-icon"></span>
+
+        </button>
+
+        <!-- Botón siguiente -->
+        <button class="carousel-control-next" type="button"
+                data-bs-target="#carouselHidroLife"
+                data-bs-slide="next">
+
+            <span class="carousel-control-next-icon"></span>
+
+        </button>
+
+    </div>
+
+</div>
+<!-- HERO -->
+
+<section id="inicio" class="container text-center mt-5">
+
+    <h1 class="hydro-title reveal mb-4">
+        HidroLife
+    </h1>
+
+    <p class="lead text-light reveal">
+
+        Sistema inteligente para el monitoreo y gestión de cultivos hidropónicos.
+
+        HidroLife integra sensores, software y análisis de datos para permitir
+        el seguimiento en tiempo real de las condiciones del cultivo, facilitando
+        una toma de decisiones más precisa y eficiente.
+
+    </p>
+
+</section>
+
+
+<!-- QUE ES HIDROLIFE -->
+
+<section class="container-fluid px-5 mt-5 text-center reveal">
+
+    <h2 class="hydro-title mb-4">
+        ¿Qué es HidroLife?
+    </h2>
+
+    <p class="lead text-light">
+
+        HidroLife es una plataforma tecnológica diseñada para optimizar
+        la gestión de cultivos hidropónicos mediante el uso de sensores
+        y herramientas de monitoreo digital.
+
+        El sistema permite visualizar en tiempo real variables críticas
+        del cultivo como pH, conductividad eléctrica (TDS), temperatura
+        y humedad ambiental.
+
+        Además de monitorear estas condiciones, HidroLife permite registrar
+        cultivos, gestionar actividades realizadas durante su crecimiento
+        y mantener un historial de datos que facilita el análisis del
+        estado del sistema hidropónico.
+
+    </p>
+
+</section>
+
+
+<!-- CARACTERISTICAS -->
+
+<section id="plataforma" class="container mt-5 reveal">
+
+    <div class="row text-center g-5">
+
+        <div class="col-md-4">
+
+            <div class="panel-dark p-4 h-100 feature-card">
+
+                <h4 class="hydro-title mb-3">
+                    Monitoreo de sensores
+                </h4>
+
+                <p class="lead text-light">
+
+                    Consulta en tiempo real las mediciones de los sensores instalados
+                    en el sistema hidropónico.
+
+                    HidroLife permite monitorear variables clave como pH, conductividad
+                    eléctrica (TDS), temperatura y humedad, proporcionando información
+                    actualizada que facilita el control de las condiciones del cultivo.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="panel-dark p-4 h-100 feature-card">
+
+                <h4 class="hydro-title mb-3">
+                    Gestión de cultivos
+                </h4>
+
+                <p class="lead text-light ">
+
+                    HidroLife permite llevar un control del número de plantas, registrar
+                    las actividades realizadas durante el crecimiento del cultivo y
+                    mantener un historial organizado de la producción.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="panel-dark p-4 h-100 feature-card">
+
+                <h4 class="hydro-title mb-3">
+                    Alertas automáticas
+                </h4>
+
+                <p class="lead text-light feature-card">
+
+                    HidroLife permite llevar un control del número de plantas, registrar
+                    las actividades realizadas durante el crecimiento del cultivo y
+                    mantener un historial organizado de la producción.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- COMO FUNCIONA -->
+
+<section id="funcionamiento" class="container mt-5 text-center reveal">
+
+    <h2 class="hydro-title mb-4">
+        ¿Cómo funciona HidroLife?
+    </h2>
+
+    <p class="lead text-light">
+
+        Los sensores instalados en el sistema hidropónico capturan
+        información sobre variables críticas del cultivo, como el pH de
+        la solución nutritiva, la conductividad eléctrica (TDS), la
+        temperatura y la humedad ambiental.
+
+        Estos datos son enviados a un microcontrolador que se encarga
+        de transmitir la información al sistema HidroLife.
+
+        Una vez recibidos, los datos son almacenados y procesados por
+        la plataforma, permitiendo al usuario visualizar las mediciones,
+        consultar el estado del cultivo y registrar las actividades
+        realizadas dentro del sistema.
+
+    </p>
+
+</section>
+
+
+<!-- TECNOLOGIA -->
+
+<section id="tecnologia" class="container mt-1 text-center reveal">
+
+
+    <div class="container text-center mt-1">
+
+        <h2 class="hydro-title mb-4 mt-5">Tecnología utilizada</h2>
+
+        <p class="lead text-light mb-4">
+            HidroLife integra diferentes tecnologías de hardware y software
+            para permitir el monitoreo inteligente de cultivos hidropónicos.
+        </p>
+
+        <div class="row g-5">
+
+            <!-- Hardware -->
+            <div class="col-md-4">
+                <div class="panel-dark p-4 h-100">
+
+
+                    <h3 class="hydro-title">Hardware</h3>
+
+                    <details>
+                        <summary class="lead text-light">
+                            ESP32
+                        </summary>
+                        <p class="lead text-light mb-4">
+                            Microcontrolador encargado de recibir la información
+                            de los sensores y transmitir los datos al sistema.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary class="lead text-light">
+                            Sensores
+                        </summary>
+                        <p class="lead text-light mb-4">
+                            Sensores utilizados para medir pH, TDS,
+                            temperatura y humedad.
+                        </p>
+                    </details>
+
+
+                </div>
+            </div>
+
+            <!-- Backend -->
+            <div class="col-md-4">
+
+                <div class="panel-dark p-4 h-100">
+                    <h3 class="hydro-title">Backend</h3>
+
+                    <details>
+                        <summary class="lead text-light">Spring Boot</summary>
+
+                        <p class="lead text-light mb-4">
+                            Framework utilizado para desarrollar
+                            la lógica del sistema.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary class="lead text-light">Spring Security</summary>
+
+                        <p class="lead text-light mb-4">
+                            Sistema de autenticación y control
+                            de acceso del sistema.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary class="lead text-light">MySQL</summary>
+
+                        <p class="lead text-light mb-4">
+                            Base de datos utilizada para almacenar
+                            la información del sistema.
+                        </p>
+                    </details>
+
+                </div>
+            </div>
+
+
+            <!-- Frontend -->
+            <div class="col-md-4">
+
+                <div class="panel-dark p-4 h-100">
+                    <h3 class="hydro-title">Frontend</h3>
+
+                    <details>
+                        <summary class="lead text-light">Thymeleaf</summary>
+
+                        <p class="lead text-light mb-4">
+                            Motor de plantillas utilizado
+                            para generar las vistas del sistema.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary class="lead text-light">Bootstrap</summary>
+
+                        <p class="lead text-light mb-4">
+                            Framework CSS para construir
+                            la interfaz de usuario.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary class="lead text-light">JavaScript</summary>
+
+                        <p class="lead text-light mb-4">
+                            Permite agregar interacción
+                            dinámica en la plataforma.
+                        </p>
+                    </details>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACTO -->
+
+<section id="contacto" class="mt-5">
+
+    <div class="container text-center">
+
+        <h2 class="hydro-title mb-4">Contacto</h2>
+
+        <p class="lead text-light mb-5">
+            Si deseas conocer más sobre el proyecto HidroLife o su funcionamiento,
+            puedes comunicarte a través de los siguientes medios.
+        </p>
+
+        <div class="row justify-content-center g-4">
+
+            <div class="col-md-3">
+                <p class="text-light">
+                    Email<br>
+                    contacto@hidrolife.com
+                </p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-light">
+                    Teléfono<br>
+                    +57 300 000 0000
+                </p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-light">
+                    GitHub<br>
+                    github.com/hidrolife
+                </p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="text-light">
+                    Institución<br>
+                    SENA
+                </p>
+            </div>
+
+        </div>
+
+        <hr class="my-5" style="opacity:0.2">
+
+        <p style="color:#9aa0a6">
+            HidroLife © 2026
+        </p>
+
+    </div>
+
+</section>
+
+<script>
+    const reveals = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    });
+
+    reveals.forEach(el => observer.observe(el));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+</body>
+
+</html>

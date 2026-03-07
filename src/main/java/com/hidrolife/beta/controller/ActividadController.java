@@ -4,6 +4,7 @@
  */
 package com.hidrolife.beta.controller;
 
+import com.hidrolife.beta.model.Cultivo;
 import com.hidrolife.beta.service.ActividadService;
 
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ public class ActividadController {
             @RequestParam LocalDate fecha,
             @RequestParam String usuario,
             @RequestParam String descripcion,
+            @RequestParam Long idCultivo,
+
             RedirectAttributes redirectAttributes) {
         System.out.println("---- DEBUG ----");
         System.out.println("Actividad: " + actividades);
@@ -34,10 +37,7 @@ public class ActividadController {
 
         System.out.println("----------------");
         try {
-            actividadService.saveActividad(
-                    actividades, fecha,
-                    usuario, descripcion
-            );
+            actividadService.saveActividad(actividades, fecha, usuario, descripcion, idCultivo);
             redirectAttributes.addFlashAttribute("msg", "Actividad creada correctamente");
             return "redirect:/baseDatos";
 
@@ -58,7 +58,7 @@ public class ActividadController {
 
         try {
 
-            actividadService.actualizarCultivo(id, actividades, fecha, usuario, descripcion);
+            actividadService.actualizarActividad(id, actividades, fecha, usuario, descripcion);
 
             redirectAttributes.addFlashAttribute("msg", "Actividad actualizada correctamente");
             return "redirect:/baseDatos";

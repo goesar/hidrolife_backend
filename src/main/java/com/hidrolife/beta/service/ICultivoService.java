@@ -11,6 +11,8 @@ import java.util.List;
 
 import com.hidrolife.beta.model.Cultivo;
 import com.hidrolife.beta.model.Usuario;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 /**
@@ -28,6 +30,9 @@ public interface ICultivoService {
     public void desactivarCultivo(Long idCultivo);
 
     public List<Cultivo> listarTodo();
+
+
+
     public List<Cultivo> buscarPorRangoFecha(LocalDate fechaInicio, LocalDate fechaFin);
     
     public List<Cultivo> buscarPorCriterioYFecha(String criterio, String valor, LocalDate fechaInicio, LocalDate fechaFin);

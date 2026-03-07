@@ -60,7 +60,15 @@
 
 
                 <!-- Tolerancia superior -->
-                <h2 class="mb-3 text-center">Ajustar tolerancia superior</h2>
+                <!-- Tolerancia superior -->
+                <h2 class="mb-3 text-center">
+                <span sec:authorize="hasRole('ADMIN')">
+                    Ajustar tolerancia superior
+                </span>
+                    <span sec:authorize="hasRole('USER')">
+                    Tolerancia superior
+                </span>
+                </h2>
 
                 <div class="d-flex justify-content-center align-items-center gap-3">
                     <input type="hidden"
