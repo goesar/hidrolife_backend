@@ -9,6 +9,9 @@ import com.hidrolife.beta.model.Usuario;
 import java.time.LocalDate;
 import java.util.List;
 import com.hidrolife.beta.model.Actividad;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.time.LocalDateTime;
 /**
  *
@@ -28,4 +31,6 @@ public interface IActividadService {
     void actualizarCultivo(Long id, String actividades, LocalDate fecha, String usuario, String descripcion);
 
     void desactivarActividad(Long id);
+
+    void actualizarActividad(Long id, String actividades, LocalDate fecha, String usuario, String descripcion);
 }

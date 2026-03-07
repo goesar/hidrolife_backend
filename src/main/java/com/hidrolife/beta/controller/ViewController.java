@@ -33,6 +33,11 @@ public class ViewController {
         this.usuarioService = usuarioService;
     }
 
+    @GetMapping("/")
+    public String paginaInicio() {
+        return "paginaInicio";
+    }
+
     @GetMapping("/login")
     public String loginPage() {
         return "login";
@@ -63,9 +68,14 @@ public class ViewController {
     }
 
     @GetMapping("/sensores")
-    public String sensores() {
+    public String sensores(Model model) {
+
+        LecturaDTO lectura = lecturaService.obtenerUltimaLectura();
+
+        model.addAttribute("lectura", lectura);
+
         return "sensores";
-    }
+}
 
     @GetMapping("/sensorPH")
     public String sensorPH(Model model) {

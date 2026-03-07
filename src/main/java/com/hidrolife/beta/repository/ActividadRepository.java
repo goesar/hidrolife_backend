@@ -5,12 +5,10 @@
 package com.hidrolife.beta.repository;
 
 import com.hidrolife.beta.model.Actividad;
-import com.hidrolife.beta.model.Usuario;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -36,4 +34,10 @@ public interface ActividadRepository extends JpaRepository<Actividad, Long> {
 
 
     List<Actividad> findByActivoTrue();
+
+    List<Actividad> findByActivoTrueOrderByIdActividadDesc();
+
+
+
+    List<Actividad> findAllByOrderByIdActividadDesc();
 }

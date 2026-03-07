@@ -22,7 +22,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/api/lecturas/**"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/styles.css", "/hidrolife.js", "/img/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/","/login", "/paginaInicio", "/styles.css", "/hidrolife.js", "/img/**", "/favicon.ico").permitAll()
                         .requestMatchers(HttpMethod.GET, "/nuevoUsuario").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuario/crear").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/lecturas/guardar").permitAll()

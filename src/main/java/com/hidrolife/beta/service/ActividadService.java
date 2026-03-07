@@ -5,11 +5,14 @@
 package com.hidrolife.beta.service;
 
 import com.hidrolife.beta.model.Actividad;
+import com.hidrolife.beta.model.Cultivo;
 import com.hidrolife.beta.repository.ActividadRepository;
 
 import java.time.LocalDate;
 
 import java.util.List;
+
+import com.hidrolife.beta.repository.CultivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,24 +23,32 @@ public class ActividadService implements IActividadService {
 
     @Autowired
     private ActividadRepository actividadRepository;
+    @Autowired
+    private CultivoRepository cultivoRepository;
 
     public void saveActividad(
             String actividades,
             LocalDate fecha,
             String usuario,
-            String descripcion
+            String descripcion,
+            Long idCultivo
     ) {
 
-        // TODO OK: crear usuario
+        Cultivo cultivo = cultivoRepository
+                .findById(idCultivo)
+                .orElseThrow();
+
         Actividad actividad = new Actividad();
+
         actividad.setActividades(actividades);
         actividad.setFecha(fecha);
         actividad.setUsuario(usuario);
         actividad.setDescripcion(descripcion);
+        actividad.setCultivo(cultivo);
         actividad.setActivo(true);
+
         actividadRepository.save(actividad);
     }
-
     
   
 
@@ -76,9 +87,9 @@ public class ActividadService implements IActividadService {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
         if (esAdmin) {
-            return actividadRepository.findAll();
+            return actividadRepository.findAllByOrderByIdActividadDesc();
         } else {
-            return actividadRepository.findByActivoTrue();
+            return actividadRepository.findByActivoTrueOrderByIdActividadDesc();
         }
     }
 
@@ -113,6 +124,22 @@ public class ActividadService implements IActividadService {
         actividad.setActivo(false);
         actividadRepository.save(actividad);
     }
+
+    @Override
+    public void actualizarActividad(Long id, String actividades, LocalDate fecha, String usuario, String descripcion) {
+
+        Actividad actividad = actividadRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cultivo no encontrado"));
+
+        actividad.setActividades(actividades);
+        actividad.setFecha(fecha);
+        actividad.setUsuario(usuario);
+        actividad.setDescripcion(descripcion);
+
+
+        actividadRepository.save(actividad); // Hibernate hace UPDATE automáticamente
+    }
+
 
     @Override
     public Actividad obtenerActividad(Long id) {
